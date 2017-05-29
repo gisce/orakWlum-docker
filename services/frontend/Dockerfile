@@ -4,18 +4,18 @@ FROM node:latest
 # Clone repository
 # * Node image already have git so no apt-get install git needed
 RUN mkdir -p /opt
-RUN cd /opt && git clone https://github.com/gisce/oraKWlum-frontend.git 
+RUN cd /opt && git clone https://github.com/gisce/orakWlum-frontend.git 
 
 # Install node dependencies
-RUN cd /opt/oraKWlum-frontend && npm install
+RUN cd /opt/orakWlum-frontend && npm install
 
 # Build page
-RUN chmod +x /opt/oraKWlum-frontend/utils/build.sh
-RUN cd /opt/oraKWlum-frontend && utils/build.sh
+RUN chmod +x /opt/orakWlum-frontend/utils/build.sh
+RUN cd /opt/orakWlum-frontend && utils/build.sh
 
 # Copy page to nginx output
 RUN rm -rf /var/www
-RUN cp -r /opt/oraKWlum-frontend/www /var/www
+RUN cp -r /opt/orakWlum-frontend/www /var/www
 
 # Give read permissions to everyone for var/www
 RUN chmod -R +r /var/www
@@ -33,7 +33,7 @@ RUN rm /etc/nginx/nginx.conf
 ADD nginx.conf /etc/nginx/nginx.conf
 
 # Set okW vhost config file
-RUN cp /opt/oraKWlum-frontend/conf/production.conf /etc/nginx/sites-enabled/default
+RUN cp /opt/orakWlum-frontend/conf/production.conf /etc/nginx/sites-enabled/default
 
 # Create default logs directories
 RUN mkdir -p /var/log/orakwlum/
