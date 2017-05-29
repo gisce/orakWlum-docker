@@ -13,14 +13,29 @@ $ ./build_new_version.sh <SERVICE> <TAG_BRANCH>
   - Default value is "master"
 
 
+## Change the active okW image!
+
+Use ```change_version.sh``` util to activate a different TAG of an existing service image
+
+```
+$ ./change_version.sh <SERVICE> <TAG>
+``` 
+- ```$SERVICE``` can be "api" or "frontend"
+- ```TAG``` points to the existing image TAG
+
+
 ## Examples
 
-### Building the last api version
+### Building the last api version and activating it
 ```
 $ ./build_new_version.sh api master 
+
+$ ./change_version.sh api master 
 ``` 
 
 ### Building v0.8.0 of frontend
 ```
 $ ./build_new_version.sh frontend v0.8.0 
+
+$ ./change_version.sh frontend v0.8.0 
 ``` 
