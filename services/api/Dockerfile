@@ -20,21 +20,21 @@ RUN chmod 600 ~/.ssh/id_rsa*
 RUN ssh-keyscan -t rsa github.com > /root/.ssh/known_hosts
 
 #    Clone repository
-RUN cd /opt && git clone -b $ORAKWLUM_API_VERSION --depth 1 git@github.com:gisce/oraKWlum-api-pub.git
+RUN cd /opt && git clone -b $ORAKWLUM_API_VERSION --depth 1 git@github.com:gisce/orakWlum-api.git
 
 #    Delete ssh key
 RUN rm /root/.ssh/id_rsa*
 
 # Install python requirements from api repository
-RUN pip install -r /opt/oraKWlum-api-pub/requirements.txt
-RUN pip install -r /opt/oraKWlum-api-pub/requirements-dev.txt
+RUN pip install -r /opt/orakWlum-api/requirements.txt
+RUN pip install -r /opt/orakWlum-api/requirements-dev.txt
 
 # Ensure py-bcrypt is not corrupted by flask
 RUN pip uninstall -y py-bcrypt && pip install py-bcrypt
 
 # "Set Environment Vars"
-ENV PATHH=/opt/oraKWlum-api-pub PROCESSES=20 SOCKET=/tmp/orakwlum-api.sock
+ENV PATHH=/opt/orakWlum-api PROCESSES=20 SOCKET=/tmp/orakwlum-api.sock
 
 # Run the API! when starting the container
-RUN chmod +x /opt/oraKWlum-api-pub/utils/start_api_server.sh
-CMD /opt/oraKWlum-api-pub/utils/start_api_server.sh
+RUN chmod +x /opt/orakWlum-api/utils/start_api_server.sh
+CMD /opt/orakWlum-api/utils/start_api_server.sh
