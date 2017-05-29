@@ -20,4 +20,5 @@ else
 fi
 
 PATHH=`dirname $0`
-echo $PATHH"/services/"$service"/build.sh" $tag 
+
+$PATHH"/services/"$service"/build.sh" $tag 
