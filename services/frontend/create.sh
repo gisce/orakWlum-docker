@@ -1,9 +1,14 @@
 #!/bin/bash
 # Set Server Name
-if [ "$#" -ne 1 ]; then
+
+
+tag="latest"
+if [ "$#" -ge 1 ]; then
     server_name="okW-frontend"
-else
-    server_name="$1"
+    tag="$1"
+    if [ "$#" -ge 2 ]; then
+        server_name="$2"
+    fi
 fi
 
 # Load settings
@@ -15,7 +20,7 @@ mkdir -p $socket_path
 mkdir -p $frontend_logs_destination
 chmod -R 777 $socket_path
 
-container_id=`docker run --restart=always $frontend_ports_mapping --name $frontend_container -d $sockets $frontend_logs -i $frontend_image /run_frontend.sh $server_name`
+container_id=`docker run --restart=always $frontend_ports_mapping --name $frontend_container -d $sockets $frontend_logs -i $frontend_image:$tag /run_frontend.sh $server_name`
 
 if [ "$container_id" != "" ]
 then
