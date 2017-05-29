@@ -4,7 +4,7 @@
 PATHH=`dirname $0`
 . $PATHH/../settings.sh
 
-name=`docker rm $frontend_container`
+name=`docker rm $frontend_container -f`
 if [ "$name" == $frontend_container ]; then
     echo -e " --->\tRemoved container '$name'"
 else
