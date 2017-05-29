@@ -10,10 +10,3 @@ if [ "$name" == $API_container ]; then
 else
     echo -e " --->\tCould not stop '$API_container'! Is it running?"
 fi
-
-name=`docker rm $API_container`
-if [ "$name" == $API_container ]; then
-    echo -e " --->\tRemoved container '$name'"
-else
-    echo -e " --->\tCould not remove '$API_container'! Does it exists?"
-fi
