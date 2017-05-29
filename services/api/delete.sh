@@ -4,7 +4,7 @@
 PATHH=`dirname $0`
 . $PATHH/../settings.sh
 
-name=`docker rm $API_container`
+name=`docker rm $API_container -f`
 if [ "$name" == $API_container ]; then
     echo -e " --->\tRemoved container '$name'"
 else
