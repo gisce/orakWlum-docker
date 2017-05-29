@@ -1,10 +1,12 @@
 # Use latest node image
 FROM node:latest
 
+ARG ORAKWLUM_FRONTEND_VERSION=master
+
 # Clone repository
 # * Node image already have git so no apt-get install git needed
 RUN mkdir -p /opt
-RUN cd /opt && git clone https://github.com/gisce/orakWlum-frontend.git 
+RUN cd /opt && git clone -b $ORAKWLUM_FRONTEND_VERSION --depth 1 https://github.com/gisce/orakWlum-frontend.git 
 
 # Install node dependencies
 RUN cd /opt/orakWlum-frontend && npm install
