@@ -3,9 +3,6 @@
 PATHH=`dirname $0`
 . $PATHH/../settings.sh
 
-# Preventive stop
-bash $PATHH/stop.sh
-
 # Prepare sockets and logs path
 mkdir -p $socket_path
 mkdir -p $API_logs_destination
