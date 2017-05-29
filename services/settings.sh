@@ -11,7 +11,7 @@ frontend_logs_destination="$base_logs/frontend"
 frontend_logs="-v $frontend_logs_destination:/var/log/orakwlum"
 
 # API conf
-API_image="okw/api:latest"
+API_image="okw/api"
 API_container="api"
 API_pid=$socket_path/$API_container.pid
 API_logs_destination="$base_logs/api"
