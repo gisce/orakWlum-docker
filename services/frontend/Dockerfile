@@ -19,6 +19,9 @@ RUN cd /opt/orakWlum-frontend && utils/build.sh
 RUN rm -rf /var/www
 RUN cp -r /opt/orakWlum-frontend/www /var/www
 
+# tMP workaround until frontend fixing
+RUN ln -s /opt/orakWlum-frontend /opt/oraKWlum-frontend
+
 # Give read permissions to everyone for var/www
 RUN chmod -R +r /var/www
 
