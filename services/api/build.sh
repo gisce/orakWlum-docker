@@ -1,8 +1,8 @@
 #!/bin/bash
 
-cp ~/.ssh/id_rsa* ./ssh/
-
 PATHH=`dirname $0`
+
+cp -pR /opt/orakwlum/.ssh/ $PATHH/ssh
 
 if [[ $# -gt 0 ]]
 then
