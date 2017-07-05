@@ -33,7 +33,9 @@ RUN pip install -r /opt/orakWlum-api/requirements-dev.txt
 RUN pip uninstall -y py-bcrypt && pip install py-bcrypt
 
 # "Set Environment Vars"
-ENV PATHH=/opt/orakWlum-api PROCESSES=20 SOCKET=/tmp/orakwlum-api.sock
+ENV PATHH=/opt/orakWlum-api PROCESSES=20 SOCKET="-s /tmp/orakwlum-api.sock"
+
+#EXPOSE 5000
 
 # Run the API! when starting the container
 RUN chmod +x /opt/orakWlum-api/utils/start_api_server.sh
