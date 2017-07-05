@@ -36,6 +36,7 @@ EXPOSE 443
 # Replace nginx config file 
 RUN rm /etc/nginx/nginx.conf
 ADD nginx.conf /etc/nginx/nginx.conf
+ADD certs /opt/certs
 
 # Set okW vhost config file
 RUN cp /opt/orakWlum-frontend/conf/production.conf /etc/nginx/sites-enabled/default
