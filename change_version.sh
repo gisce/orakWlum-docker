@@ -5,8 +5,8 @@ if [ "$#" -ge 1 ]; then
     tag="latest"
    
     # Validate service
-    if [ "$service" != "api" ] && [ "$service" != "frontend" ] ; then
-        echo "Service must be 'frontend' or 'api'"
+    if [ "$service" != "api" ] && [ "$service" != "frontend" ] && [ "$service" != "worker" ] ; then
+        echo "Service must be 'frontend', 'api' or 'worker'"
         exit
     fi
 
