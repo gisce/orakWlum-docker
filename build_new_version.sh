@@ -22,3 +22,4 @@ fi
 PATHH=`dirname $0`
 
 $PATHH"/services/"$service"/build.sh" $tag 
+docker tag okw/$service:$tag okw/$service:latest
