@@ -1,7 +1,7 @@
 version: "2"
 
 services:
-  frontend:
+  frontend-src:
     image: orakwlum_frontend
     build: ./services/frontend
     container_name: orakwlum_frontend
