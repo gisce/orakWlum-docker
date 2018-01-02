@@ -108,7 +108,7 @@ services:
     container_name: mongodb
     volumes:
       - ./volumes/logs/mongodb:/var/log/mongodb
-      - ./volumes/mongodb:/var/lib/mongodb
+      - ./volumes/mongodb:/data/db/
 
 
   #################
