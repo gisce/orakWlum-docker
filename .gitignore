@@ -4,3 +4,4 @@ volumes/frontend/
 volumes/nginx/certs/
 volumes/api
 volumes/logs
+volumes/mongodb
