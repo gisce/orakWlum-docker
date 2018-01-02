@@ -29,6 +29,8 @@ services:
     container_name: api
     volumes:
       - ./volumes/api:/opt/orakWlum-api
+      - ./services/api/api.ini:/opt/orakWlum-api/config/api.ini
+      - ./services/api/config.py:/opt/orakWlum-api/config.py
       - ./volumes/logs/api:/var/log/orakwlum/
 
   mongodb:
