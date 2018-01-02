@@ -28,9 +28,17 @@ services:
     container_name: api
     volumes:
       - ./volumes/api:/opt/orakWlum-api
+      - ./volumes/logs/api:/var/log/orakwlum/
     environment:
       - VIRTUAL_NETWORK=nginx-proxy
       - VIRTUAL_PORT=5000
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    volumes:
+      - ./volumes/logs/mongodb:/var/log/mongodb
+      - ./volumes/mongodb:/var/lib/mongodb
 
   nginx:
     restart: always
