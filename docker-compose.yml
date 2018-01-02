@@ -8,10 +8,10 @@ services:
     volumes:
       - ./volumes/frontend:/orakwlum
 
-  frontend-nginx:
+  frontend:
     restart: always
     image: nginx
-    container_name: frontend-nginx
+    container_name: frontend
     volumes:
       - ./volumes/frontend/www:/usr/share/nginx/html:ro
       - ./volumes/nginx/conf.d/:/etc/nginx/conf.d
@@ -23,15 +23,13 @@ services:
       - LETSENCRYPT_EMAIL=xtorello@gisce.net
 
   api:
+    restart: always
     image: api
     build: ./services/api
     container_name: api
     volumes:
       - ./volumes/api:/opt/orakWlum-api
       - ./volumes/logs/api:/var/log/orakwlum/
-    environment:
-      - VIRTUAL_NETWORK=nginx-proxy
-      - VIRTUAL_PORT=5000
 
   mongodb:
     image: mongo
