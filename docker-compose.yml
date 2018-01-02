@@ -1,0 +1,9 @@
+version: "2"
+
+services:
+  frontend:
+    image: orakwlum_frontend
+    build: ./services/frontend
+    container_name: orakwlum_frontend
+    volumes:
+      - ./volumes/frontend:/orakwlum
