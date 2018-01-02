@@ -1,5 +1,4 @@
 *.sw*
-ssh/
-services/frontend/certs/
+services/api/ssh
 volumes/frontend/
 volumes/nginx/certs/
