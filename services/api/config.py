@@ -13,6 +13,10 @@ class GlobalConfig(object):
     MONGO_PORT = 27017
     MONGO_DB = "oraKW"
 
+    # Base REDIS
+    REDIS_HOST = "redis"
+    REDIS_PORT = 6379
+
     # Version
     VERSION = version.API_VERSION
     API_VERSION_PR = version.API_VERSION_PR
