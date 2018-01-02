@@ -17,4 +17,6 @@ RUN chmod +x utils/build.sh
 RUN utils/build.sh
 
 # Copy page to nginx output at containter start
-CMD cp -r . /orakwlum
+CMD rm -fR /orakwlum/*
+CMD rm -fR /orakwlum/.*
+CMD cp -R . /orakwlum
