@@ -56,7 +56,7 @@ services:
   #########################################
 
   frontend-src:
-    image: frontend-src
+    image: okw/frontend:v0.13.10a
     build: 
       context: ./services/frontend
       args:
@@ -91,7 +91,7 @@ services:
 
   api:
     restart: always
-    image: api
+    image: okw/api:v0.13.4a
     build: 
       context: ./services/api
       args:
