@@ -1,3 +1,4 @@
 *.sw*
 ssh/
 services/frontend/certs/
+volumes/
