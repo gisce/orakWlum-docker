@@ -60,7 +60,7 @@ services:
     build: 
       context: ./services/frontend
       args:
-        - ORAKWLUM_API_VERSION=v0.13.10a
+        - ORAKWLUM_FRONTEND_VERSION=v0.13.10a
     container_name: frontend-src
     volumes:
       - ./volumes/frontend:/orakwlum
