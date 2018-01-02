@@ -2,8 +2,18 @@ version: "2"
 
 services:
   frontend-src:
-    image: orakwlum_frontend
+    image: frontend-src
     build: ./services/frontend
-    container_name: orakwlum_frontend
+    container_name: frontend-src
     volumes:
       - ./volumes/frontend:/orakwlum
+
+
+  frontend-nginx:
+    restart: always
+    image: nginx
+    container_name: frontend-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./volumes/frontend/www:/usr/share/nginx/html:ro
