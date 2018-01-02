@@ -3,3 +3,4 @@ services/api/ssh
 volumes/frontend/
 volumes/nginx/certs/
 volumes/api
+volumes/logs
