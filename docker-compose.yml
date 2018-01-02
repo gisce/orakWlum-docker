@@ -40,6 +40,12 @@ services:
       - ./volumes/logs/mongodb:/var/log/mongodb
       - ./volumes/mongodb:/var/lib/mongodb
 
+  redis:
+    image: redis:alpine
+    container_name: redis
+    volumes:
+      - ./volumes/logs/redis:/var/log/redis
+
   nginx:
     restart: always
     image: nginx
