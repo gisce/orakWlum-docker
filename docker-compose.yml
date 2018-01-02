@@ -106,6 +106,8 @@ services:
     restart: always
     image: mongo
     container_name: mongodb
+    #ports:
+    #  - "27017:27017"
     volumes:
       - ./volumes/logs/mongodb:/var/log/mongodb
       - ./volumes/mongodb:/data/db/
