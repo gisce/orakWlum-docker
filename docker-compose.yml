@@ -15,6 +15,7 @@ services:
     container_name: frontend-nginx
     volumes:
       - ./volumes/frontend/www:/usr/share/nginx/html:ro
+      - ./volumes/nginx/conf.d/:/etc/nginx/conf.d
     environment:
       - VIRTUAL_HOST=som.okw.gisce.net
       - VIRTUAL_NETWORK=nginx-proxy
