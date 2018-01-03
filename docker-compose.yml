@@ -175,3 +175,22 @@ services:
     volumes:
       - ./logs/redis:/var/log/redis
 
+
+
+
+
+  #################
+  ### Auxiliar ct #
+  #################
+
+  # This will ensure that the latest worker-base image is the one with the current defined TAG
+  worker-base:
+    image: okw/worker-base
+    container_name: worker-base
+    build:
+      context: ./services/worker-base
+      args:
+        - ORAKWLUM_VERSION=${OKW_VERSION}
+
+
+
