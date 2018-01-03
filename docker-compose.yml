@@ -78,10 +78,10 @@ services:
       - ./volumes/frontend/www:/usr/share/nginx/html:ro
       - ./volumes/nginx/conf.d/:/etc/nginx/conf.d
     environment:
-      - VIRTUAL_HOST=som.okw.gisce.net
+      - VIRTUAL_HOST=som.testing.okw.gisce.net
       - VIRTUAL_NETWORK=nginx-proxy
       - VIRTUAL_PORT=80
-      - LETSENCRYPT_HOST=som.okw.gisce.net
+      - LETSENCRYPT_HOST=som.testing.okw.gisce.net
       - LETSENCRYPT_EMAIL=xtorello@gisce.net
 
 
@@ -91,11 +91,11 @@ services:
 
   api:
     restart: always
-    image: okw/api:v0.13.4a
+    image: okw/api:${API_VERSION}
     build: 
       context: ./services/api
       args:
-        - ORAKWLUM_API_VERSION=v0.13.4a
+        - ORAKWLUM_API_VERSION=${API_VERSION}
 
     container_name: api
     volumes:
