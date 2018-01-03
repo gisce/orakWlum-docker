@@ -1,9 +1,17 @@
 # orakWlum-docker
-Docker files for orakWlum!
+Docker project for the orakWlum!
 
 It integrates a docker composition project that starts all the involved elements to run the orakWlum.
 
 ## Project elements
+
+The deployed versions and all docker project related configurations are handled inside the `.env` file:
+```
+FRONTEND_VERSION=$FRONTEND_TAG
+API_VERSION=$API_TAG
+DOMAIN=example.com
+ADMIN_EMAIL=hello@gisce.net
+``` 
 
 - `nginx` main webserver
   - it provides the access layer integrated with the _let's encrypt_ engine
