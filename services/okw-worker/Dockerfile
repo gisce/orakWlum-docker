@@ -32,8 +32,5 @@ WORKDIR /opt/orakWlum
 RUN pip install -r /opt/orakWlum/requirements.txt
 RUN pip install -r /opt/orakWlum/requirements-dev.txt
 
-# Add worker settings
-ADD worker_settings.py .
-
 # Start worker
 CMD rq worker -c worker_settings
