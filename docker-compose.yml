@@ -96,14 +96,15 @@ services:
       context: ./services/api
       args:
         - ORAKWLUM_API_VERSION=${API_VERSION}
-
+    depends_on:
+      - mongodb
+      - redis
     container_name: api
     volumes:
       #- ./volumes/api:/opt/orakWlum-api
       - ./config/api/api.ini:/opt/orakWlum-api/config/api.ini
       - ./config/api/config.py:/opt/orakWlum-api/config.py
       - ./logs/api:/var/log/orakwlum/
-
 
 
   ######################
@@ -117,13 +118,14 @@ services:
       context: ./services/api-worker
       args:
         - ORAKWLUM_API_VERSION=${API_VERSION}
-
+    depends_on:
+      - mongodb
+      - redis
     container_name: api-worker
     volumes:
       #- ./volumes/api:/opt/orakWlum-api
       - ./config/api/config.py:/opt/orakWlum-api/config.py
       - ./logs/api:/var/log/orakwlum/
-
 
 
   ##############
