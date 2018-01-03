@@ -1,6 +1,24 @@
 # orakWlum-docker
 Docker files for orakWlum!
 
+It integrates a docker composition project that starts all the involved elements to run the orakWlum.
+
+## Project elements
+
+- `nginx` main webserver
+  - it provides the access layer integrated with the _let's encrypt_ engine
+  - at every startup it reviews if the configred SSL/TLS vhosts needs a certificate renewal, if needed automatically handle it to ensure that no human intervention is needed to keep update it
+  - also create a vhost for each docker element with a VIRTUAL_HOST definition
+  - to avoid bugs with `websocket` it provides a direct proxy to the API (double webservers jump brokes websocket implementation)
+- `frontend`
+  - it provides the `okW frontend` webserver with their special rules applicated
+  - configuration can be modified through `config/frontend/frontend.conf`
+- `api`
+  - it runs the `okW API` using the uWSGI app server
+  - `uWSGI` configuration can be changed using `config/api/api.ini`
+  - `API` configuration can be changed using `config/api/config.py`
+
+
 ## Build a new okW image
 
 Use ```build_new_version.sh``` util to deploy new releases of the orakWlum!
