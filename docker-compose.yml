@@ -56,11 +56,11 @@ services:
   #########################################
 
   frontend-src:
-    image: okw/frontend:v0.13.10a
+    image: okw/frontend:${FRONTEND_VERSION}
     build: 
       context: ./services/frontend
       args:
-        - ORAKWLUM_FRONTEND_VERSION=v0.13.10a
+        - ORAKWLUM_FRONTEND_VERSION=${FRONTEND_VERSION}
     container_name: frontend-src
     volumes:
       - ./volumes/frontend:/orakwlum
