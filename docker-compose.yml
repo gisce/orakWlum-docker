@@ -128,6 +128,27 @@ services:
       - ./logs/api:/var/log/orakwlum/
 
 
+  #######################
+  ### StaticData worker #
+  #######################
+
+  worker-static:
+    restart: always
+    image: okw/worker-static:${OKW_VERSION}
+    build:
+      context: ./services/worker-staticData
+      args:
+        - ORAKWLUM_VERSION=${OKW_VERSION}
+    depends_on:
+      - mongodb
+      - redis
+    container_name: worker-static
+    volumes:
+      #- ./volumes/api:/opt/orakWlum-api
+      - ./config/api/config.py:/opt/orakWlum-api/config.py
+      - ./logs/api:/var/log/orakwlum/
+
+
   ##############
   ### The DB ###
   ##############
