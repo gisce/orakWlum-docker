@@ -39,43 +39,39 @@ It integrates a docker composition project that starts all the involved elements
   - it review and ensure that the defined SSL certificates are up to date at `volumes/nginx/certs`
 
 
+## Usage 
+
+### Start and stop orakWlum
+
+#### Start
+```
+$ docker-compose up
+```
+#### Stop
+```
+$ docker-compose down
+```
 
 
-## Build a new okW image
+### Build a new okW image
 
-Use ```build_new_version.sh``` util to deploy new releases of the orakWlum!
+Just change the `.env` values, and force a new build calling
 
 ```
-$ ./build_new_version.sh <SERVICE> <TAG_BRANCH>
+$ docker-compose build
 ``` 
-- ```$SERVICE``` can be "api" or "frontend"
-- ```TAG_BRANCH``` is optional, and points to the TAG or BRANCH name
-  - Default value is "master"
+
+This just will create the new images, so the availability of the service is guaranteed.
+
+To propagate the changes, [apply it!](#apply-the-latest-changes)
 
 
-## Change the active okW image!
+### Apply the latest changes
 
-Use ```change_version.sh``` util to activate a different TAG of an existing service image
+Simply turn off and on all the env with:
 
 ```
-$ ./change_version.sh <SERVICE> <TAG>
-``` 
-- ```$SERVICE``` can be "api" or "frontend"
-- ```TAG``` points to the existing image TAG
-
-
-## Examples
-
-### Building the last api version and activating it
-```
-$ ./build_new_version.sh api master 
-
-$ ./change_version.sh api master 
+$ docker-compose down
+$ docker-compose up
 ``` 
 
-### Building v0.8.0 of frontend
-```
-$ ./build_new_version.sh frontend v0.8.0 
-
-$ ./change_version.sh frontend v0.8.0 
-``` 
