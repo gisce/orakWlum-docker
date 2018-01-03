@@ -146,7 +146,7 @@ services:
     #scale: ${OKW_WORKERS}
     volumes:
       #- ./volumes/api:/opt/orakWlum-api
-      - ./config/api/config.py:/opt/orakWlum-api/config.py
+      - ./config/worker/worker_settings.py:/opt/orakWlum/worker_settings.py
       - ./logs/api:/var/log/orakwlum/
 
 
@@ -173,6 +173,8 @@ services:
     restart: always
     image: redis:alpine
     container_name: redis
+    ports:
+      - "6379:6379"
     volumes:
       - ./logs/redis:/var/log/redis
 
