@@ -10,13 +10,22 @@ It integrates a docker composition project that starts all the involved elements
   - at every startup it reviews if the configred SSL/TLS vhosts needs a certificate renewal, if needed automatically handle it to ensure that no human intervention is needed to keep update it
   - also create a vhost for each docker element with a VIRTUAL_HOST definition
   - to avoid bugs with `websocket` it provides a direct proxy to the API (double webservers jump brokes websocket implementation)
+  - configuration template can be altered through `config/nginx/nginx.tmpl`
 - `frontend`
   - it provides the `okW frontend` webserver with their special rules applicated
   - configuration can be modified through `config/frontend/frontend.conf`
+  - logs are saved to `logs/frontend`
 - `api`
   - it runs the `okW API` using the uWSGI app server
   - `uWSGI` configuration can be changed using `config/api/api.ini`
   - `API` configuration can be changed using `config/api/config.py`
+  - logs are saved to `logs/api`
+- `mongodb` DB
+  - it runs `mongodb` using the DB deployed at `volumes/mongodb`
+  - logs are saved to `logs/mongodb`
+- `redis` DB
+  - it runs `redis` to provide the queues and caching server
+  - logs are saved to `logs/redis`
 
 
 ## Build a new okW image
