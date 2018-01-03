@@ -105,6 +105,27 @@ services:
       - ./logs/api:/var/log/orakwlum/
 
 
+
+  ######################
+  ### The API worker ###
+  ######################
+
+  api-worker:
+    restart: always
+    image: okw/api-worker:${API_VERSION}
+    build:
+      context: ./services/api-worker
+      args:
+        - ORAKWLUM_API_VERSION=${API_VERSION}
+
+    container_name: api-worker
+    volumes:
+      #- ./volumes/api:/opt/orakWlum-api
+      - ./config/api/config.py:/opt/orakWlum-api/config.py
+      - ./logs/api:/var/log/orakwlum/
+
+
+
   ##############
   ### The DB ###
   ##############
