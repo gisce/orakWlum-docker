@@ -102,7 +102,7 @@ services:
       #- ./volumes/api:/opt/orakWlum-api
       - ./config/api/api.ini:/opt/orakWlum-api/config/api.ini
       - ./config/api/config.py:/opt/orakWlum-api/config.py
-      - ./volumes/logs/api:/var/log/orakwlum/
+      - ./logs/api:/var/log/orakwlum/
 
 
   ##############
@@ -116,7 +116,7 @@ services:
     #ports:
     #  - "27017:27017"
     volumes:
-      - ./volumes/logs/mongodb:/var/log/mongodb
+      - ./logs/mongodb:/var/log/mongodb
       - ./volumes/mongodb:/data/db/
 
 
@@ -129,5 +129,5 @@ services:
     image: redis:alpine
     container_name: redis
     volumes:
-      - ./volumes/logs/redis:/var/log/redis
+      - ./logs/redis:/var/log/redis
 
