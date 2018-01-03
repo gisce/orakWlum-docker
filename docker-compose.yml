@@ -76,7 +76,7 @@ services:
     container_name: frontend
     volumes:
       - ./volumes/frontend/www:/usr/share/nginx/html:ro
-      - ./volumes/nginx/conf.d/:/etc/nginx/conf.d
+      - ./config/frontend/frontend.conf:/etc/nginx/conf.d/frontend.conf
     environment:
       - VIRTUAL_HOST=${DOMAIN}
       - VIRTUAL_NETWORK=nginx-proxy
@@ -100,8 +100,8 @@ services:
     container_name: api
     volumes:
       #- ./volumes/api:/opt/orakWlum-api
-      - ./services/api/api.ini:/opt/orakWlum-api/config/api.ini
-      - ./services/api/config.py:/opt/orakWlum-api/config.py
+      - ./config/api/api.ini:/opt/orakWlum-api/config/api.ini
+      - ./config/api/config.py:/opt/orakWlum-api/config.py
       - ./volumes/logs/api:/var/log/orakwlum/
 
 
