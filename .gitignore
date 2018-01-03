@@ -1,3 +1,5 @@
 *.sw*
-ssh/
-services/frontend/certs/
+services/api/ssh
+services/okw-worker/ssh/
+logs/
+volumes/

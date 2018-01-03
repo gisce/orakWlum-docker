@@ -1,0 +1,184 @@
+version: "2"
+
+services:
+
+  ##########################
+  ### The main webserver ###
+  ##########################
+
+  nginx:
+    restart: always
+    image: nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/etc/nginx/conf.d"
+      - "/etc/nginx/vhost.d"
+      - "/usr/share/nginx/html"
+      - "./volumes/nginx/certs:/etc/nginx/certs:ro"
+
+
+  ##################################
+  ### The nginx config generator ###
+  ##################################
+
+  nginx-gen:
+    image: jwilder/docker-gen
+    container_name: nginx-gen
+    volumes:
+      - "/var/run/docker.sock:/tmp/docker.sock:ro"
+      - "./config/nginx/nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro"
+    volumes_from:
+      - nginx
+    entrypoint: /usr/local/bin/docker-gen -notify-sighup nginx -watch -wait 5s:30s /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
+
+
+  ##################################
+  ### The letsencrypt management ###
+  ##################################
+
+  letsencrypt-nginx-proxy-companion:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: letsencrypt-nginx-proxy-companion
+    volumes_from:
+      - nginx
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./volumes/nginx/certs:/etc/nginx/certs:rw"
+    environment:
+      - NGINX_DOCKER_GEN_CONTAINER=nginx-gen
+
+
+  #########################################
+  ### The Frontend NodeJS compiled code ###
+  #########################################
+
+  frontend-src:
+    image: okw/frontend:${FRONTEND_VERSION}
+    build: 
+      context: ./services/frontend
+      args:
+        - ORAKWLUM_FRONTEND_VERSION=${FRONTEND_VERSION}
+    container_name: frontend-src
+    volumes:
+      - ./volumes/frontend:/orakwlum
+
+
+  ###############################
+  ### The Frontend web server ###
+  ###############################
+
+  frontend:
+    restart: always
+    image: nginx
+    container_name: frontend
+    depends_on:
+      - api
+    volumes:
+      - ./volumes/frontend/www:/usr/share/nginx/html:ro
+      - ./config/frontend/frontend.conf:/etc/nginx/conf.d/default.conf
+    environment:
+      - VIRTUAL_HOST=${DOMAIN}
+      - VIRTUAL_NETWORK=nginx-proxy
+      - VIRTUAL_PORT=80
+      - LETSENCRYPT_HOST=${DOMAIN}
+      - LETSENCRYPT_EMAIL=${ADMIN_EMAIL}
+
+
+  ###############
+  ### The API ###
+  ###############
+
+  api:
+    restart: always
+    image: okw/api:${API_VERSION}
+    build: 
+      context: ./services/api
+      args:
+        - ORAKWLUM_API_VERSION=${API_VERSION}
+    depends_on:
+      - mongodb
+      - redis
+    container_name: api
+    volumes:
+      #- ./volumes/api:/opt/orakWlum-api
+      - ./config/api/api.ini:/opt/orakWlum-api/config/api.ini
+      - ./config/api/config.py:/opt/orakWlum-api/config.py
+      - ./logs/api:/var/log/orakwlum/
+    environment:
+      - VIRTUAL_NETWORK=nginx-proxy
+
+
+  ######################
+  ### The API worker ###
+  ######################
+
+  api-worker:
+    restart: always
+    image: okw/api-worker:${API_VERSION}
+    build:
+      context: ./services/api-worker
+      args:
+        - ORAKWLUM_API_VERSION=${API_VERSION}
+    depends_on:
+      - mongodb
+      - redis
+    container_name: api-worker
+    volumes:
+      #- ./volumes/api:/opt/orakWlum-api
+      - ./config/api/config.py:/opt/orakWlum-api/config.py
+      - ./logs/api:/var/log/orakwlum/
+
+
+  ##################
+  ### okW worker ###
+  ##################
+
+  okw-worker:
+    restart: always
+    image: okw/okw-worker:${OKW_VERSION}
+    build:
+      context: ./services/okw-worker
+      args:
+        - ORAKWLUM_VERSION=${OKW_VERSION}
+    depends_on:
+      - mongodb
+      - redis
+    #container_name: okw-worker
+    #scale: ${OKW_WORKERS}
+    volumes:
+      #- ./volumes/api:/opt/orakWlum-api
+      - ./config/worker/worker_settings.py:/opt/orakWlum/worker_settings.py
+      - ./logs/api:/var/log/orakwlum/
+
+
+  ##############
+  ### The DB ###
+  ##############
+
+  mongodb:
+    restart: always
+    image: mongo
+    container_name: mongodb
+    #ports:
+    #  - "27017:27017"
+    volumes:
+      - ./logs/mongodb:/var/log/mongodb
+      - ./volumes/mongodb:/data/db/
+
+
+  #################
+  ### The Redis ###
+  #################
+
+  redis:
+    restart: always
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./logs/redis:/var/log/redis
+
