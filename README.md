@@ -28,6 +28,19 @@ It integrates a docker composition project that starts all the involved elements
   - logs are saved to `logs/redis`
 
 
+### Auxiliar elements
+
+- `frontend-src`
+  - used to compile the requested version of the frontend inside `volumes/frontend`, the one that will be served by the `frontend`
+- `nginx-gen`
+  - used to prepare the `nginx` configuration based on our composition, it uses the `config/nginx/nginx.tmpl` template
+- `letsencrypt-nginx-proxy-companion`
+  - used to simplify the _let's encrypt_ management
+  - it review and ensure that the defined SSL certificates are up to date at `volumes/nginx/certs`
+
+
+
+
 ## Build a new okW image
 
 Use ```build_new_version.sh``` util to deploy new releases of the orakWlum!
