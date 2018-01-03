@@ -1,5 +1,5 @@
 *.sw*
 services/api/ssh
-services/worker-base/ssh/
+services/okw-worker/ssh/
 logs/
 volumes/
