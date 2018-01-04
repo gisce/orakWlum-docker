@@ -149,6 +149,8 @@ services:
       - redis
     #container_name: okw-worker
     #scale: ${OKW_WORKERS}
+    logging:
+      driver: none
     volumes:
       #- ./volumes/api:/opt/orakWlum-api
       - ./config/worker/worker_settings.py:/opt/orakWlum/worker_settings.py
