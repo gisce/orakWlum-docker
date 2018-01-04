@@ -143,6 +143,7 @@ services:
       context: ./services/okw-worker
       args:
         - ORAKWLUM_VERSION=${OKW_VERSION}
+        - ESIOS_TOKEN=${ESIOS_TOKEN}
     depends_on:
       - mongodb
       - redis
@@ -162,8 +163,6 @@ services:
     restart: always
     image: mongo
     container_name: mongodb
-    #ports:
-    #  - "27017:27017"
     volumes:
       - ./logs/mongodb:/var/log/mongodb
       - ./volumes/mongodb:/data/db/
