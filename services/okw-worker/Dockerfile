@@ -1,5 +1,6 @@
 FROM python:3.6-slim-jessie
 ARG ORAKWLUM_VERSION=master
+ARG ESIOS_TOKEN=none
 
 RUN # "=========Installing oraKWlum API v$ORAKWLUM_API_VERSION=========="
 
@@ -32,5 +33,7 @@ WORKDIR /opt/orakWlum
 RUN pip install -r /opt/orakWlum/requirements.txt
 RUN pip install -r /opt/orakWlum/requirements-dev.txt
 
+
+ENV ESIOS_TOKEN=$ESIOS_TOKEN
 # Start worker
 CMD rq worker -c worker_settings
