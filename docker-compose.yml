@@ -25,6 +25,7 @@ services:
   ##################################
 
   nginx-gen:
+    restart: always
     image: jwilder/docker-gen
     container_name: nginx-gen
     volumes:
@@ -40,6 +41,7 @@ services:
   ##################################
 
   letsencrypt-nginx-proxy-companion:
+    restart: always
     image: jrcs/letsencrypt-nginx-proxy-companion
     container_name: letsencrypt-nginx-proxy-companion
     volumes_from:
