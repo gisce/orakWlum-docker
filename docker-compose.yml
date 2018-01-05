@@ -185,3 +185,32 @@ services:
     volumes:
       - ./logs/redis:/var/log/redis
 
+
+  ###################
+  ### okW API DEV ###
+  ###################
+
+  api-dev:
+    image: okw/api-dev:${OKW_VERSION}
+    container_name: api-dev
+    build:
+      context: ./services/api-devel
+      args:
+        - ORAKWLUM_VERSION=${OKW_VERSION}
+        - ESIOS_TOKEN=${ESIOS_TOKEN}
+    depends_on:
+      - mongodb
+      - redis
+    ports:
+      - "5000:5000"
+    #container_name: okw-worker
+    #scale: ${OKW_WORKERS}
+    logging:
+      driver: none
+    volumes:
+      #- ./volumes/api:/opt/orakWlum-api
+      - ./config/api/api.ini:/opt/orakWlum-api/config/api.ini
+      - ./config/api/config.py:/opt/orakWlum-api/config.py
+      - ./config/worker/worker_settings.py:/opt/orakWlum/worker_settings.py
+      - ./logs/api:/var/log/orakwlum/
+
