@@ -6,6 +6,7 @@ RUN # "=========Installing oraKWlum API v$ORAKWLUM_API_VERSION=========="
 
 # Get oKW
 RUN apt-get update && apt-get install -y --no-install-recommends\
+    vim \
     ssh \
     git \
     && rm -rf /var/lib/apt/lists/*
