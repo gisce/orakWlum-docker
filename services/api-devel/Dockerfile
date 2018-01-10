@@ -10,4 +10,6 @@ WORKDIR /opt/orakWlum-api
 
 RUN echo "uwsgi --ini config/api.ini --py-autoreload 1" > start.sh
 
-CMD bash
+#CMD bash start.sh
+
+ENTRYPOINT bash /opt/orakWlum-api/start.sh
