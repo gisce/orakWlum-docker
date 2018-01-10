@@ -208,10 +208,11 @@ services:
       - "5000:5000"
     #container_name: okw-worker
     #scale: ${OKW_WORKERS}
-    logging:
-      driver: none
+    #logging:
+    #  driver: none
     volumes:
-      #- ./volumes/api:/opt/orakWlum-api
+      - ./volumes/api-dev/reset_devel.sh:/opt/orakWlum-api/reset_devel.sh
+      - ./volumes/api-dev/.bash_history:/root/.bash_history
       - ./config/api/api.ini:/opt/orakWlum-api/config/api.ini
       - ./config/api/config.py:/opt/orakWlum-api/config.py
       - ./config/worker/worker_settings.py:/opt/orakWlum/worker_settings.py
