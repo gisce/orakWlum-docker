@@ -23,7 +23,7 @@ ENV ORAKWLUM_BACKEND_VERSION 1.0.0
 
 RUN mkdir /tmp/todel && cd /tmp/todel
 
-RUN wget https://github.com/mongodb/mongo-c-driver/releases/download/1.5.0/mongo-c-driver-1.5.0.tar.gz --no-check-certificate \
+RUN wget https://github.com/mongodb/mongo-c-driver/releases/download/1.9.0/mongo-c-driver-1.9.0.tar.gz --no-check-certificate \
     && tar xfzp mongo-c-dr*
 
 RUN cd mongo-c-driver* \
