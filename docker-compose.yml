@@ -127,7 +127,7 @@ services:
     depends_on:
       - mongodb
       - redis
-    container_name: api-worker
+    #container_name: api-worker
     volumes:
       #- ./volumes/api:/opt/orakWlum-api
       - ./config/api/config.py:/opt/orakWlum-api/config.py
