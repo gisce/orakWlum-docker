@@ -192,12 +192,13 @@ services:
   ### okW API DEV ###
   ###################
 
-  api-dev:
-    image: okw/api-dev:${OKW_VERSION}
-    container_name: api-dev
+  api-devel:
+    image: okw/api-devel:${API_VERSION}
+    container_name: api-devel
     build:
       context: ./services/api-devel
       args:
+        - ORAKWLUM_API_VERSION=${API_VERSION}
         - ORAKWLUM_VERSION=${OKW_VERSION}
         - ESIOS_TOKEN=${ESIOS_TOKEN}
     depends_on:
