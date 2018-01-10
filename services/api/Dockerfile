@@ -1,4 +1,4 @@
-FROM orakwlum/orakwlum-base:1.0.0
+FROM orakwlum/orakwlum-base:1.1.0
 
 ARG ORAKWLUM_API_VERSION=master
 
