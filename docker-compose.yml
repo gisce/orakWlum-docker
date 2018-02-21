@@ -130,6 +130,7 @@ services:
     #container_name: api-worker
     volumes:
       #- ./volumes/api:/opt/orakWlum-api
+      #- ./config/api/api.ini:/opt/orakWlum-api/config/api.ini
       - ./config/api/config.py:/opt/orakWlum-api/config.py
       - ./logs/api:/var/log/orakwlum/
 
@@ -172,6 +173,8 @@ services:
     volumes:
       - ./logs/mongodb:/var/log/mongodb
       - ./volumes/mongodb:/data/db/
+    logging:
+      driver: none
 
 
   #################
