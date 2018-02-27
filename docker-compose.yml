@@ -18,6 +18,7 @@ services:
       - "/etc/nginx/vhost.d"
       - "/usr/share/nginx/html"
       - "./volumes/nginx/certs:/etc/nginx/certs:ro"
+    network_mode: "host"
 
 
   ##################################
@@ -100,9 +101,6 @@ services:
       context: ./services/api
       args:
         - ORAKWLUM_API_VERSION=${API_VERSION}
-    depends_on:
-      - mongodb
-      - redis
     container_name: api
     volumes:
       #- ./volumes/api:/opt/orakWlum-api
@@ -111,7 +109,10 @@ services:
       - ./logs/api:/var/log/orakwlum/
     environment:
       - VIRTUAL_NETWORK=nginx-proxy
-
+    network_mode: "host"
+    extra_hosts:
+      - "mongodb:127.0.0.1"
+      - "redis:127.0.0.1"
 
   ######################
   ### The API worker ###
@@ -124,15 +125,17 @@ services:
       context: ./services/api-worker
       args:
         - ORAKWLUM_API_VERSION=${API_VERSION}
-    depends_on:
-      - mongodb
-      - redis
     #container_name: api-worker
     volumes:
       #- ./volumes/api:/opt/orakWlum-api
       #- ./config/api/api.ini:/opt/orakWlum-api/config/api.ini
       - ./config/api/config.py:/opt/orakWlum-api/config.py
       - ./logs/api:/var/log/orakwlum/
+    network_mode: "host"
+    extra_hosts:
+      - "mongodb:127.0.0.1"
+      - "redis:127.0.0.1"
+
 
 
   ##################
@@ -147,48 +150,18 @@ services:
       args:
         - ORAKWLUM_VERSION=${OKW_VERSION}
         - ESIOS_TOKEN=${ESIOS_TOKEN}
-    depends_on:
-      - mongodb
-      - redis
     #container_name: okw-worker
     #scale: ${OKW_WORKERS}
-    logging:
-      driver: none
     volumes:
       #- ./volumes/api:/opt/orakWlum-api
       - ./config/worker/worker_settings.py:/opt/orakWlum/worker_settings.py
       - ./logs/api:/var/log/orakwlum/
+    network_mode: "host"
+    extra_hosts:
+      - "mongodb:127.0.0.1"
+      - "redis:127.0.0.1"
 
 
-  ##############
-  ### The DB ###
-  ##############
-
-  mongodb:
-    restart: always
-    image: mongo
-    container_name: mongodb
-    ports:
-      - "27017:27017"
-    volumes:
-      - ./logs/mongodb:/var/log/mongodb
-      - ./volumes/mongodb:/data/db/
-    logging:
-      driver: none
-
-
-  #################
-  ### The Redis ###
-  #################
-
-  redis:
-    restart: always
-    image: redis:alpine
-    container_name: redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - ./logs/redis:/var/log/redis
 
 
   ###################
@@ -204,13 +177,10 @@ services:
         - ORAKWLUM_API_VERSION=${API_VERSION}
         - ORAKWLUM_VERSION=${OKW_VERSION}
         - ESIOS_TOKEN=${ESIOS_TOKEN}
-    depends_on:
-      - mongodb
-      - redis
     ports:
-      - "5000:5000"
+      - "5001:5000"
     #container_name: okw-worker
-    #scale: ${OKW_WORKERS}
+    scale: 0
     #logging:
     #  driver: none
     volumes:
@@ -220,4 +190,35 @@ services:
       - ./config/api/config.py:/opt/orakWlum-api/config.py
       - ./config/worker/worker_settings.py:/opt/orakWlum/worker_settings.py
       - ./logs/api:/var/log/orakwlum/
+
+
+  ##############
+  ### The DB ###
+  ##############
+
+#  mongodb:
+#    restart: always
+#    image: mongo
+#    container_name: mongodb
+#    ports:
+#      - "27017:27017"
+#    volumes:
+#      - ./logs/mongodb:/var/log/mongodb
+#      - ./volumes/mongodb:/data/db/
+
+
+  #################
+  ### The Redis ###
+  #################
+
+#  redis:
+#    restart: always
+#    image: redis:alpine
+#    container_name: redis
+#    ports:
+#      - "6379:6379"
+#    volumes:
+#      - ./logs/redis:/var/log/redis
+
+
 
