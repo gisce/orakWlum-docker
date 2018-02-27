@@ -1,4 +1,4 @@
-FROM orakwlum/orakwlum-base:1.1.0
+FROM okw/orakwlum-base:1.1.0
 
 ARG ORAKWLUM_API_VERSION=master
 
@@ -9,6 +9,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
     vim \
     ssh \
     git \
+    telnet \
+    inetutils-ping \ 
     && rm -rf /var/lib/apt/lists/*
 
 # Add required SSH pubkey from HOST
