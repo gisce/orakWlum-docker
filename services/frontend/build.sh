@@ -1,6 +1,8 @@
 #!/bin/bash
 
-PATHH=`dirname $0`
+#PATHH=`dirname $0`
+
+PATHH=~/src/*front*
 
 if [[ $# -gt 0 ]]
 then
