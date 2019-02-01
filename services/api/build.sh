@@ -1,8 +1,9 @@
 #!/bin/bash
 
-PATHH=`dirname $0`
+#PATHH=`dirname $0`
+#cp -pR /opt/orakwlum/.ssh/ $PATHH/ssh
 
-cp -pR /opt/orakwlum/.ssh/ $PATHH/ssh
+PATHH=~/src/*api/
 
 if [[ $# -gt 0 ]]
 then
