@@ -1,4 +1,5 @@
 *.sw*
+.env
 services/api/ssh
 services/okw-worker/ssh/
 logs/

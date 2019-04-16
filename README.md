@@ -83,3 +83,19 @@ $ docker-compose down
 $ docker-compose up
 ``` 
 
+## Step by step build
+
+Fresh deployments needs some fine tunning, due to the initial tagging of latest images (not covered by docker-compose):
+
+```
+# Ensure orakwlum base image is build!
+$ docker build services/base -t okw/orakwlum-base:1.1.0
+
+# Build API and tag it
+$ docker-compose build api
+$ docker tag okw/api:$LAST_TAG okw/api:latest
+
+# Build all okW elements once the latest tag is performed
+$ docker-compose build
+```
+

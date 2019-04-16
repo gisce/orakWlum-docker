@@ -8,6 +8,8 @@ WORKDIR /tmp
 # * Node image already have git so no apt-get install git needed
 RUN git clone -b $ORAKWLUM_FRONTEND_VERSION --depth 1 https://github.com/gisce/orakWlum-frontend.git 
 
+RUN apt update && apt install -y vim
+
 WORKDIR /tmp/orakWlum-frontend
 # Install node dependencies
 RUN npm install

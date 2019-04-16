@@ -18,6 +18,7 @@ services:
       - "/etc/nginx/vhost.d"
       - "/usr/share/nginx/html"
       - "./volumes/nginx/certs:/etc/nginx/certs:ro"
+    network_mode: "host"
 
 
   ##################################
@@ -25,6 +26,7 @@ services:
   ##################################
 
   nginx-gen:
+    restart: always
     image: jwilder/docker-gen
     container_name: nginx-gen
     volumes:
@@ -40,6 +42,7 @@ services:
   ##################################
 
   letsencrypt-nginx-proxy-companion:
+    restart: always
     image: jrcs/letsencrypt-nginx-proxy-companion
     container_name: letsencrypt-nginx-proxy-companion
     volumes_from:
@@ -98,9 +101,6 @@ services:
       context: ./services/api
       args:
         - ORAKWLUM_API_VERSION=${API_VERSION}
-    depends_on:
-      - mongodb
-      - redis
     container_name: api
     volumes:
       #- ./volumes/api:/opt/orakWlum-api
@@ -109,7 +109,10 @@ services:
       - ./logs/api:/var/log/orakwlum/
     environment:
       - VIRTUAL_NETWORK=nginx-proxy
-
+    network_mode: "host"
+    extra_hosts:
+      - "mongodb:127.0.0.1"
+      - "redis:127.0.0.1"
 
   ######################
   ### The API worker ###
@@ -122,14 +125,17 @@ services:
       context: ./services/api-worker
       args:
         - ORAKWLUM_API_VERSION=${API_VERSION}
-    depends_on:
-      - mongodb
-      - redis
-    container_name: api-worker
+    #container_name: api-worker
     volumes:
       #- ./volumes/api:/opt/orakWlum-api
+      #- ./config/api/api.ini:/opt/orakWlum-api/config/api.ini
       - ./config/api/config.py:/opt/orakWlum-api/config.py
       - ./logs/api:/var/log/orakwlum/
+    network_mode: "host"
+    extra_hosts:
+      - "mongodb:127.0.0.1"
+      - "redis:127.0.0.1"
+
 
 
   ##################
@@ -143,13 +149,45 @@ services:
       context: ./services/okw-worker
       args:
         - ORAKWLUM_VERSION=${OKW_VERSION}
-    depends_on:
-      - mongodb
-      - redis
+        - ESIOS_TOKEN=${ESIOS_TOKEN}
     #container_name: okw-worker
     #scale: ${OKW_WORKERS}
     volumes:
       #- ./volumes/api:/opt/orakWlum-api
+      - ./config/worker/worker_settings.py:/opt/orakWlum/worker_settings.py
+      - ./logs/api:/var/log/orakwlum/
+    network_mode: "host"
+    extra_hosts:
+      - "mongodb:127.0.0.1"
+      - "redis:127.0.0.1"
+
+
+
+
+  ###################
+  ### okW API DEV ###
+  ###################
+
+  api-devel:
+    image: okw/api-devel:${API_VERSION}
+    container_name: api-devel
+    build:
+      context: ./services/api-devel
+      args:
+        - ORAKWLUM_API_VERSION=${API_VERSION}
+        - ORAKWLUM_VERSION=${OKW_VERSION}
+        - ESIOS_TOKEN=${ESIOS_TOKEN}
+    ports:
+      - "5001:5000"
+    #container_name: okw-worker
+    scale: 0
+    #logging:
+    #  driver: none
+    volumes:
+      - ./volumes/api-dev/reset_devel.sh:/opt/orakWlum-api/reset_devel.sh
+      - ./volumes/api-dev/.bash_history:/root/.bash_history
+      - ./config/api/api.ini:/opt/orakWlum-api/config/api.ini
+      - ./config/api/config.py:/opt/orakWlum-api/config.py
       - ./config/worker/worker_settings.py:/opt/orakWlum/worker_settings.py
       - ./logs/api:/var/log/orakwlum/
 
@@ -158,27 +196,29 @@ services:
   ### The DB ###
   ##############
 
-  mongodb:
-    restart: always
-    image: mongo
-    container_name: mongodb
-    #ports:
-    #  - "27017:27017"
-    volumes:
-      - ./logs/mongodb:/var/log/mongodb
-      - ./volumes/mongodb:/data/db/
+#  mongodb:
+#    restart: always
+#    image: mongo
+#    container_name: mongodb
+#    ports:
+#      - "27017:27017"
+#    volumes:
+#      - ./logs/mongodb:/var/log/mongodb
+#      - ./volumes/mongodb:/data/db/
 
 
   #################
   ### The Redis ###
   #################
 
-  redis:
-    restart: always
-    image: redis:alpine
-    container_name: redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - ./logs/redis:/var/log/redis
+#  redis:
+#    restart: always
+#    image: redis:alpine
+#    container_name: redis
+#    ports:
+#      - "6379:6379"
+#    volumes:
+#      - ./logs/redis:/var/log/redis
+
+
 
