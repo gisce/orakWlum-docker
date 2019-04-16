@@ -4,9 +4,7 @@
 PATHH=`dirname $0`
 . $PATHH/../settings.sh
 
-name=`docker start $WORKER_container`
-if [ "$name" == $WORKER_container ]; then
-    echo -e " --->\tStarted container '$name'"
-else
-    echo -e " --->\tCould not start '$WORKER_container'! It exist?"
-fi
+for worker in `seq $HOW_MANY_WORKERS`; do
+    echo Starting $WORKER_container$worker
+    name=`docker start $WORKER_container$worker`
+done

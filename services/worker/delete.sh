@@ -4,9 +4,7 @@
 PATHH=`dirname $0`
 . $PATHH/../settings.sh
 
-name=`docker rm $WORKER_container -f`
-if [ "$name" == $WORKER_container ]; then
-    echo -e " --->\tRemoved container '$name'"
-else
-    echo -e " --->\tCould not remove '$WORKER_container'! Does it exists?"
-fi
+for worker in `seq $HOW_MANY_WORKERS`; do
+    echo Deleting $WORKER_container$worker
+    name=`docker rm $WORKER_container$worker -f`
+done

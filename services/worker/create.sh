@@ -12,17 +12,12 @@ fi
 mkdir -p $socket_path
 mkdir -p $WORKER_logs_destination
 
-container_id=`docker run --restart=always --network=host $WORKER_logs --name $WORKER_container -i $WORKER_image:$tag`
+for worker in `seq $HOW_MANY_WORKERS`; do
+    echo Creating $WORKER_container$worker
+    docker run --restart=always --network=host $WORKER_logs --name $WORKER_container$worker -i $WORKER_image:$tag &
+done
 
-if [ "$container_id" != "" ]
-then
-    chmod -R 777 $socket_path
-    echo "$container_id" > $WORKER_pid
-    echo "$WORKER_container started! id: "$container_id
-else
-    if [ -e "id_frontend" ]; then
-        rm $WORKER_pid
-    fi
-    echo "[Error] $WORKER_container can't be started!"
-fi
+chmod -R 777 $socket_path
+echo "$container_id" > $WORKER_pid
+echo "$WORKER_container started! id: "$container_id
 
