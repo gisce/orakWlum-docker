@@ -18,6 +18,7 @@ API_logs_destination="$base_logs/api"
 API_logs="-v $API_logs_destination:/var/log/orakwlum"
 
 # Worker conf
+HOW_MANY_WORKERS=2
 WORKER_image="okw/worker"
 WORKER_container="worker"
 WORKER_pid=$socket_path/$WORKER_container.pid
