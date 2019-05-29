@@ -18,7 +18,7 @@ API_pid=$socket_path/$API_container.pid
 API_logs_destination="$base_logs/api"
 API_logs="-v $API_logs_destination:/var/log/orakwlum"
 API_csvs_destination="$base_csvs/csv"
-API_csvs="-v $API_csvs_destination:/var/data/orakwlum"
+API_csvs="-v $API_csvs_destination:/var/data/orakwlum/csv"
 
 # Worker conf
 HOW_MANY_WORKERS=2

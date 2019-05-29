@@ -14,7 +14,7 @@ mkdir -p $WORKER_logs_destination
 
 for worker in `seq $HOW_MANY_WORKERS`; do
     echo Creating $WORKER_container$worker
-    docker run --restart=always --network=host $WORKER_logs --name $WORKER_container$worker -i $WORKER_image:$tag &
+    docker run --restart=always --network=host -d $WORKER_logs $API_csvs --name $WORKER_container$worker -i $WORKER_image:$tag &
 done
 
 chmod -R 777 $socket_path
