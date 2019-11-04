@@ -20,9 +20,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 ENV ORAKWLUM_BACKEND_VERSION 1.0.0
 
-# Set swappiness to 10
-RUN echo 10 > /proc/sys/vm/swappiness
-
 RUN mkdir /tmp/todel && cd /tmp/todel
 
 RUN wget https://github.com/mongodb/mongo-c-driver/releases/download/1.5.0/mongo-c-driver-1.5.0.tar.gz --no-check-certificate \
