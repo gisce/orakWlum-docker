@@ -18,8 +18,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
     && rm -rf /var/lib/apt/lists/*
 
-
 ENV ORAKWLUM_BACKEND_VERSION 1.0.0
+
+# Set swappiness to 10
+RUN echo 10 > /proc/sys/vm/swappiness
 
 RUN mkdir /tmp/todel && cd /tmp/todel
 
