@@ -11,10 +11,11 @@ fi
 # Prepare sockets and logs path
 mkdir -p $socket_path
 mkdir -p $WORKER_logs_destination
+mkdir -p $download_path
 
 for worker in `seq $HOW_MANY_WORKERS`; do
     echo Creating $WORKER_container$worker
-    docker run --restart=always --network=host $WORKER_logs --name $WORKER_container$worker -i $WORKER_image:$tag &
+    docker run --restart=always --network=host $WORKER_logs $downloads --name $WORKER_container$worker -i $WORKER_image:$tag &
 done
 
 chmod -R 777 $socket_path
