@@ -1,7 +1,7 @@
 socket_path="/tmp/okw_api"
-sockets="-v $socket_path:/tmp/"
+sockets="-v $socket_path:/tmp"
 base_logs="/var/log/orakwlum"
-download_path="/tmp/download"
+download_path="/tmp/okw_api/download"
 downloads="-v $download_path:/tmp/download"
 
 # Frontend conf
