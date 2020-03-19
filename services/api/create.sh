@@ -11,8 +11,9 @@ fi
 # Prepare sockets and logs path
 mkdir -p $socket_path
 mkdir -p $API_logs_destination
+mkdir -p $download_path
 
-container_id=`docker run --restart=always --network=host -d $sockets $API_logs --name $API_container -i $API_image:$tag`
+container_id=`docker run --restart=always --network=host -d $sockets $API_logs $downloads --name $API_container -i $API_image:$tag`
 
 if [ "$container_id" != "" ]
 then

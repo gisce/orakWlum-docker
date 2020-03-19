@@ -18,9 +18,10 @@ PATHH=`dirname $0`
 # Prepare socket and logs path
 mkdir -p $socket_path
 mkdir -p $frontend_logs_destination
+mkdir -p $download_path
 chmod -R 777 $socket_path
 
-container_id=`docker run --restart=always $frontend_ports_mapping --name $frontend_container -d $sockets $frontend_logs -i $frontend_image:$tag /run_frontend.sh $server_name`
+container_id=`docker run --restart=always $frontend_ports_mapping --name $frontend_container -d $sockets $frontend_logs $downloads -i $frontend_image:$tag /run_frontend.sh $server_name`
 
 if [ "$container_id" != "" ]
 then
