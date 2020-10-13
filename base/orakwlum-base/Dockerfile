@@ -8,7 +8,7 @@ ENV LANG C.UTF-8
 RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     bcrypt \
-    python3.5-dev \
+    python3.6-dev \
     python3-pip \
     libbson-dev \
     libsasl2-dev \
@@ -33,7 +33,7 @@ RUN cd mongo-c-driver* \
     && make install \
     && ln -s /usr/local/lib/lib* /usr/lib/
 
-RUN ln -s /usr/bin/python3.5 /usr/bin/python
+RUN ln -s /usr/bin/python3.6 /usr/bin/python
 
 RUN ln -s /usr/bin/pip3 /usr/bin/pip
 
